@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="coffeenetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="paymentmethode">
+          <Key>
+            <PropertyRef Name="paymentmethodeid" />
+          </Key>
+          <Property Name="paymentmethodeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paymentmethode" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sell">
+          <Key>
+            <PropertyRef Name="sellid" />
+          </Key>
+          <Property Name="sellid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="typeid" Type="int" />
+          <Property Name="number" Type="int" />
+          <Property Name="paymoney" Type="int" />
+          <Property Name="paymentmethodeid" Type="int" />
+          <Property Name="money" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="type">
+          <Key>
+            <PropertyRef Name="typeid" />
+          </Key>
+          <Property Name="typeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typename" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_sell_paymentmethode">
+          <End Role="paymentmethode" Type="Self.paymentmethode" Multiplicity="0..1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paymentmethode">
+              <PropertyRef Name="paymentmethodeid" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="paymentmethodeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="typeid">
+          <End Role="type" Type="Self.type" Multiplicity="0..1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="typeid" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="typeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="coffeenetModelStoreContainer">
+          <EntitySet Name="paymentmethode" EntityType="Self.paymentmethode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sell" EntityType="Self.sell" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="type" EntityType="Self.type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_sell_paymentmethode" Association="Self.FK_sell_paymentmethode">
+            <End Role="paymentmethode" EntitySet="paymentmethode" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="typeid" Association="Self.typeid">
+            <End Role="type" EntitySet="type" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="coffeenetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="paymentmethode">
+          <Key>
+            <PropertyRef Name="paymentmethodeid" />
+          </Key>
+          <Property Name="paymentmethodeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paymentmethode1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="sell" Relationship="Self.FK_sell_paymentmethode" FromRole="paymentmethode" ToRole="sell" />
+        </EntityType>
+        <EntityType Name="sell">
+          <Key>
+            <PropertyRef Name="sellid" />
+          </Key>
+          <Property Name="sellid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="typeid" Type="Int32" />
+          <Property Name="number" Type="Int32" />
+          <Property Name="paymoney" Type="Int32" />
+          <Property Name="paymentmethodeid" Type="Int32" />
+          <Property Name="money" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="paymentmethode" Relationship="Self.FK_sell_paymentmethode" FromRole="sell" ToRole="paymentmethode" />
+          <NavigationProperty Name="type" Relationship="Self.typeid" FromRole="sell" ToRole="type" />
+        </EntityType>
+        <EntityType Name="type">
+          <Key>
+            <PropertyRef Name="typeid" />
+          </Key>
+          <Property Name="typeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typename" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="sell" Relationship="Self.typeid" FromRole="type" ToRole="sell" />
+        </EntityType>
+        <Association Name="FK_sell_paymentmethode">
+          <End Role="paymentmethode" Type="Self.paymentmethode" Multiplicity="0..1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="paymentmethode">
+              <PropertyRef Name="paymentmethodeid" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="paymentmethodeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="typeid">
+          <End Role="type" Type="Self.type" Multiplicity="0..1" />
+          <End Role="sell" Type="Self.sell" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type">
+              <PropertyRef Name="typeid" />
+            </Principal>
+            <Dependent Role="sell">
+              <PropertyRef Name="typeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="coffeenetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="paymentmethode" EntityType="Self.paymentmethode" />
+          <EntitySet Name="sell" EntityType="Self.sell" />
+          <EntitySet Name="type" EntityType="Self.type" />
+          <AssociationSet Name="FK_sell_paymentmethode" Association="Self.FK_sell_paymentmethode">
+            <End Role="paymentmethode" EntitySet="paymentmethode" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+          <AssociationSet Name="typeid" Association="Self.typeid">
+            <End Role="type" EntitySet="type" />
+            <End Role="sell" EntitySet="sell" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="coffeenetModelStoreContainer" CdmEntityContainer="coffeenetEntities">
+          <EntitySetMapping Name="paymentmethode">
+            <EntityTypeMapping TypeName="coffeenetModel.paymentmethode">
+              <MappingFragment StoreEntitySet="paymentmethode">
+                <ScalarProperty Name="paymentmethodeid" ColumnName="paymentmethodeid" />
+                <ScalarProperty Name="paymentmethode1" ColumnName="paymentmethode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sell">
+            <EntityTypeMapping TypeName="coffeenetModel.sell">
+              <MappingFragment StoreEntitySet="sell">
+                <ScalarProperty Name="sellid" ColumnName="sellid" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="paymoney" ColumnName="paymoney" />
+                <ScalarProperty Name="paymentmethodeid" ColumnName="paymentmethodeid" />
+                <ScalarProperty Name="money" ColumnName="money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="type">
+            <EntityTypeMapping TypeName="coffeenetModel.type">
+              <MappingFragment StoreEntitySet="type">
+                <ScalarProperty Name="typeid" ColumnName="typeid" />
+                <ScalarProperty Name="typename" ColumnName="typename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
